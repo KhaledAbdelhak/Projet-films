@@ -6,12 +6,11 @@ export default class Movies extends Component {
         return (
             <div className="w-75 d-flex flex-row flex-wrap align-content-start">
                 {
-                    this.props.movies.map((movie) => (
-                        <Movie movie={movie} updateSelectedMovie={this.props.updateSelectedMovie} />
+                    this.props.movies.map((movie, index) => (
+                        <Movie key={movie.title + index} movie={movie} updateSelectedMovie={ () => { this.props.updateSelectedMovie(index)} } />
 
                     ))
-                }
-                
+                }             
             </div>
         )
     }

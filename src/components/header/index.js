@@ -10,7 +10,7 @@ export default class Header extends Component {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse">
-                    <ul class="navbar-nav ms-auto">
+                    <ul className="navbar-nav ms-auto">
                         <li className="nav-item active">
                             <a className="nav-link" href="/">Home</a>
                         </li>
