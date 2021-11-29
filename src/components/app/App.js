@@ -3,7 +3,6 @@ import Header from "../header";
 import Movies from "../movies";
 import MovieDetails from "../movie-details"
 import Loader from "../Loader";
-import dataMovies from "../../data"
 import apiMovie from "../../conf/api.movie";
 import './style.css'
 
@@ -18,12 +17,6 @@ class App extends Component {
       loaded: false,
     }
 
-    setTimeout(() => {
-      this.setState({
-        movies: dataMovies,
-        loaded: true
-      })
-    }, 1000)
   }
 
   updateSelectedMovie = (index) => {
@@ -34,8 +27,24 @@ class App extends Component {
 
   componentDidMount() {
     apiMovie.get('discover/movie')
-      .then((res) => console.log(res))
+      .then((res) => res.data.results)
+      .then( moviesApi => {
+        const movies = moviesApi.map( m => ({
+          img: 'https://image.tmdb.org/t/p/w500' + m.poster_path,
+          title: m.title,
+          details: `${m.release_date} | ${m.vote_average}/10 (${m.vote_count})`,
+          description: m.overview,
+        }))
+        this.updateMovies(movies)
+      })
       .catch((err) => console.log(err))
+  }
+
+  updateMovies(movies) {
+    this.setState({
+      movies,
+      loaded: true
+    })
   }
 
   render() {
