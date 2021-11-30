@@ -3,9 +3,9 @@ import Header from "../header";
 import Movies from "../movies";
 import MovieDetails from "../movie-details"
 import Loader from "../Loader";
-import apiMovie from "../../conf/api.movie";
+import apiMovie, { apiMovieMap } from "../../conf/api.movie";
 import './style.css'
-import SearchBar from "../searchbar";
+import SearchBar from "../searchbar"
 
 
 class App extends Component {
@@ -30,18 +30,13 @@ class App extends Component {
     apiMovie.get('discover/movie')
       .then((res) => res.data.results)
       .then( moviesApi => {
-        const movies = moviesApi.map( m => ({
-          img: 'https://image.tmdb.org/t/p/w500' + m.poster_path,
-          title: m.title,
-          details: `${m.release_date} | ${m.vote_average}/10 (${m.vote_count})`,
-          description: m.overview,
-        }))
+        const movies = moviesApi.map(apiMovieMap)
         this.updateMovies(movies)
       })
       .catch((err) => console.log(err))
   }
 
-  updateMovies(movies) {
+  updateMovies = (movies) => {
     this.setState({
       movies,
       loaded: true
