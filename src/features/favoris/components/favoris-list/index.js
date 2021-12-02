@@ -13,7 +13,6 @@ export default class Favoris extends Component {
                                 updateSelectedMovie={ () => { this.props.updateSelectedMovie(index)} } 
                                 removeFavori={this.props.removeFavori}
                         />
-
                     ))
                 }             
             </div>

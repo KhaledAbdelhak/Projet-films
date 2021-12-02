@@ -24,7 +24,7 @@ export default class SearchBar extends Component {
                 initialValues={{ query: '', language: 'en-US' }}
             >
                 { ({handleSubmit, handleChange, handleBlur, isSubmitting}) => (
-                    <form className="d-flex flex_row p-2 m-2" onSubmit={handleSubmit}>
+                    <form className="d-flex flex_row p-4 m-2" onSubmit={handleSubmit}>
                         <input name="query" className="flex-fill form-control mx-2" placeholder="Search ..." onChange={handleChange} onBlur={handleBlur} />
                         <select  className="mx-2 form-control w-25" name="language" onChange={handleChange} onBlur={handleBlur}>
                             <option value="en-ES">Anglais</option>

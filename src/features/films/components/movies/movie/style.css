@@ -8,6 +8,7 @@
     background: #eee;
     margin: 0px 5px 10px 5px;
     cursor: pointer;  
+    border-radius: 8px;
 }
 
 .containerMovies:hover {
