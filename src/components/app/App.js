@@ -1,6 +1,8 @@
 import { Component } from "react";
+import { Route, Routes , Navigate} from "react-router-dom";
 import Header from "../header";
 import Films from "../../features/films";
+import Favoris from "../../features/favoris";
 import apiMovie, { apiMovieMap } from "../../conf/api.movie";
 import './style.css'
 
@@ -43,13 +45,19 @@ class App extends Component {
     return (
       <div className="App d-flex flex-column">
         <Header />
-        <Films 
-          loaded={this.state.loaded}
-          updateMovies={this.updateMovies}
-          updateSelectedMovie={this.updateSelectedMovie}
-          movies={this.state.movies}
-          selectedMovie={this.state.selectedMovie}
-        />
+        <Routes>
+          <Route path="/" element={
+            <Films 
+                loaded={this.state.loaded}
+                updateMovies={this.updateMovies}
+                updateSelectedMovie={this.updateSelectedMovie}
+                movies={this.state.movies}
+                selectedMovie={this.state.selectedMovie}
+            /> } 
+           />
+           <Route path="/favoris" element={ <Favoris/> } />
+           <Route path="*" element={ <Navigate replace to="/" /> } />
+        </Routes>
       </div>
     );
   }
