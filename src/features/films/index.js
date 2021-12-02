@@ -12,7 +12,13 @@ export default (props) => {
         <SearchBar updateMovies={props.updateMovies} />
         {props.loaded && 
             <div className="d-flex flex-row border flex-fill pt-4 p-2">
-                <Movies  movies={props.movies}  updateSelectedMovie={props.updateSelectedMovie} />
+                <Movies  
+                    movies={props.movies}  
+                    updateSelectedMovie={props.updateSelectedMovie} 
+                    favoris={props.favoris}
+                    removeFavori={props.removeFavori}
+                    addFavori={props.addFavori}
+                /> 
                 <MovieDetails  movie={props.movies[props.selectedMovie]}/>
             </div>
         }
