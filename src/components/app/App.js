@@ -4,6 +4,7 @@ import Header from "../header";
 import Films from "../../features/films";
 import Favoris from "../../features/favoris";
 import apiMovie, { apiMovieMap } from "../../conf/api.movie";
+import apiFirebase from "../../conf/api.firebase";
 import './style.css'
 
 class App extends Component {
@@ -14,7 +15,7 @@ class App extends Component {
       movies: null, 
       selectedMovie: 0,
       loaded: false,
-      favoris: []
+      favoris: null
     }
 
   }
@@ -32,14 +33,32 @@ class App extends Component {
         const movies = moviesApi.map(apiMovieMap);
         this.updateMovies(movies);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
+
+    apiFirebase.get('/favoris.json')
+      .then(res => {
+        let favoris = res.data ? res.data : [];
+        this.updateFavoris(favoris)
+        
+      })  
   }
 
   updateMovies = (movies) => {
     this.setState({
       movies,
-      loaded: true
+      loaded: this.state.favoris ? true : false
     })
+  }
+
+  updateFavoris = (favoris) => {
+    this.setState({
+      favoris,
+      loaded: this.state.movies ? true : false
+    })
+  }
+
+  saveFavoris= () => {
+    apiFirebase.put('/favoris.json', this.state.favoris)
   }
 
   addFavori = (title) => {
@@ -48,6 +67,9 @@ class App extends Component {
     favoris.push(film);
     this.setState({
       favoris
+    }, () => {
+      this.saveFavoris();
+
     })
   }
 
@@ -57,7 +79,11 @@ class App extends Component {
     favoris.splice(index, 1);
     this.setState({
       favoris
+    }, () => {
+      this.saveFavoris();
+
     })
+
   }
 
   render() {
@@ -74,7 +100,7 @@ class App extends Component {
                 selectedMovie={this.state.selectedMovie}
                 addFavori={this.addFavori}
                 removeFavori={this.removeFavori}
-                favoris={this.state.favoris.map(f => f.title)}
+                favoris={this.state.favoris}
             /> } 
            />
            <Route path="/favoris" element={ 
